@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/conversionOriginTitle"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/origin"
+        app:layout_constraintEnd_toEndOf="@id/conversionOriginButton"
+        app:layout_constraintStart_toStartOf="@id/conversionOriginButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/conversionOriginButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/choose"
+        app:layout_constraintEnd_toStartOf="@id/conversionDestinyButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/conversionOriginTitle" />
+
+    <TextView
+        android:id="@+id/conversionDestinyTitle"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/destiny"
+        app:layout_constraintEnd_toEndOf="@id/conversionDestinyButton"
+        app:layout_constraintStart_toStartOf="@id/conversionDestinyButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/conversionDestinyButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/choose"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/conversionOriginButton"
+        app:layout_constraintTop_toBottomOf="@id/conversionDestinyTitle" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/conversionValueResultGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="conversionValueLayout,conversionResultSymbol,conversionResultValue" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/conversionErrorGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:constraint_referenced_ids="conversionErrorMessage,conversionErrorButton" />
+
+    <TextView
+        android:id="@+id/conversionErrorMessage"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/error_message"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/conversionDestinyButton" />
+
+    <Button
+        android:id="@+id/conversionErrorButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/try_again"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/conversionErrorMessage" />
+
+    <ProgressBar
+        android:id="@+id/conversionLoading"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/conversionOriginButton" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/conversionValueLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintBottom_toTopOf="@id/conversionResultValue"
+        app:layout_constraintTop_toBottomOf="@id/conversionOriginButton"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintVertical_chainStyle="packed"
+        tools:hint="Valor para converter (BRL)">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/conversionValueField"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:digits="0123456789,."
+            android:inputType="numberDecimal"
+            android:lines="1"
+            android:maxLength="17"
+            tools:text="0,00" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/conversionResultSymbol"
+        style="@style/TextAppearance.MaterialComponents.Headline6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        app:layout_constraintEnd_toStartOf="@id/conversionResultValue"
+        app:layout_constraintTop_toTopOf="@id/conversionResultValue"
+        tools:text="BRL" />
+
+    <TextView
+        android:id="@+id/conversionResultValue"
+        style="@style/TextAppearance.MaterialComponents.Headline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:maxWidth="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/conversionValueLayout"
+        tools:text="0,00" />
+</androidx.constraintlayout.widget.ConstraintLayout>

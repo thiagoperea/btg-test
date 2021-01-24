@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">BTG Test</string>
+
+    <string name="choose">Escolha</string>
+    <string name="choose_filter">Escolha o filtro</string>
+    <string name="destiny">Destino</string>
+    <string name="error_message">Ocorreu um erro :(</string>
+    <string name="filter">Filtrar</string>
+    <string name="name">Nome</string>
+    <string name="origin">Origem</string>
+    <string name="symbol">Código</string>
+    <string name="try_again">Tentar novamente</string>
+    <string name="value_to_convert" formatted="false">Valor para converter (%s)</string>
+</resources>
