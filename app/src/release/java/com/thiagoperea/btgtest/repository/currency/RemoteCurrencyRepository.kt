@@ -7,6 +7,7 @@ import com.thiagoperea.btgtest.data.internal.dao.RateDao
 import com.thiagoperea.btgtest.data.model.Currency
 import com.thiagoperea.btgtest.data.model.Rate
 import com.thiagoperea.btgtest.internal.BtgTestApplication.Companion.APP_TAG
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
@@ -15,7 +16,8 @@ class RemoteCurrencyRepository(
     private val service: CurrencyLayerService,
     private val currencyDao: CurrencyDao,
     private val rateDao: RateDao,
-    private val apiKey: String
+    private val apiKey: String,
+    private val ioDispatcher: CoroutineDispatcher
 ) : CurrencyRepository {
 
     /**
@@ -30,7 +32,7 @@ class RemoteCurrencyRepository(
         val originUpperCase = originSymbol?.toUpperCase(Locale.getDefault())
         val destinyUpperCase = destinySymbol?.toUpperCase(Locale.getDefault())
 
-        val (origin, destiny) = withContext(Dispatchers.IO) {
+        val (origin, destiny) = withContext(ioDispatcher) {
             val cache = searchRateFromCache(originUpperCase, destinyUpperCase)
             if (cache.first == null || cache.second == null) {
                 return@withContext searchRateFromInternet(originUpperCase, destinyUpperCase)
@@ -52,7 +54,7 @@ class RemoteCurrencyRepository(
     /**
      * Busca taxas no cache
      */
-    private suspend fun searchRateFromCache(
+    private fun searchRateFromCache(
         originUpperCase: String?,
         destinyUpperCase: String?
     ): Pair<Rate?, Rate?> {
@@ -67,8 +69,12 @@ class RemoteCurrencyRepository(
     private suspend fun searchRateFromInternet(
         originUpperCase: String?,
         destinyUpperCase: String?
-    ): Pair<Rate, Rate> {
+    ): Pair<Rate?, Rate?> {
         val response = service.searchRate("$originUpperCase,$destinyUpperCase", apiKey)
+
+        if (response.quotesMap.isEmpty()) {
+            return Pair(null, null)
+        }
 
         val originId = "USD$originUpperCase"
         val originRate = response.quotesMap[originId] ?: 0.0
@@ -91,7 +97,7 @@ class RemoteCurrencyRepository(
     ) = try {
         val resultList = mutableListOf<Currency>()
 
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             if (!getCurrencyListFromCache(resultList)) {
                 getCurrencyListFromInternet(resultList)
             }

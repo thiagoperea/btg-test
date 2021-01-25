@@ -3,6 +3,7 @@ package com.thiagoperea.btgtest.internal
 import com.thiagoperea.btgtest.data.datasource.CurrencyLayerService
 import com.thiagoperea.btgtest.repository.currency.CurrencyRepository
 import com.thiagoperea.btgtest.repository.currency.RemoteCurrencyRepository
+import kotlinx.coroutines.Dispatchers
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -13,7 +14,13 @@ const val NAMED_API_KEY = "api.key"
 
 val repositoryModule = module {
     single<CurrencyRepository> {
-        RemoteCurrencyRepository(get(), get(), get(), get(named(NAMED_API_KEY)))
+        RemoteCurrencyRepository(
+            get(),
+            get(),
+            get(),
+            get(named(NAMED_API_KEY)),
+            Dispatchers.IO
+        )
     }
 }
 

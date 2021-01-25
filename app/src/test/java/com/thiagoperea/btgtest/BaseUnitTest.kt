@@ -13,17 +13,20 @@ import org.junit.runner.Description
 @ExperimentalCoroutinesApi
 abstract class BaseUnitTest {
 
+    val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
+
     @get:Rule
     val liveDataRule = InstantTaskExecutorRule()
 
     @get:Rule
-    val coroutinesRule = CoroutineTestRule()
+    val coroutinesRule = CoroutineTestRule(dispatcher)
 }
 
 @ExperimentalCoroutinesApi
-class CoroutineTestRule : TestWatcher() {
+class CoroutineTestRule(
+    private val dispatcher: TestCoroutineDispatcher
+) : TestWatcher() {
 
-    private val dispatcher: TestCoroutineDispatcher = TestCoroutineDispatcher()
 
     override fun starting(description: Description?) {
         super.starting(description)

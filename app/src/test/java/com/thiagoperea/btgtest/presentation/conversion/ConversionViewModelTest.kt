@@ -38,8 +38,8 @@ class ConversionViewModelTest : BaseUnitTest() {
 
         lambdaSlot.captured.invoke(Pair(2.0, 3.0))
 
-        assertEquals(viewModel.rateUsd, 2.0)
-        assertEquals(viewModel.rateDestiny, 3.0)
+        assertEquals(viewModel.rateUsd, 2.0, 1.0)
+        assertEquals(viewModel.rateDestiny, 3.0, 1.0)
 
         coVerifySequence {
             observerMock.onChanged(ofType(ConversionState.Loading::class))
